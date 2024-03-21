@@ -1,14 +1,35 @@
 <script setup>
+import { ref } from 'vue';
+import { PAGE_ACTIVITY, PAGE_PROGRESS, PAGE_TIMELINE } from './constants'
 import Header from './components/Header.vue'
 import Nav from './components/Nav.vue'
+import TheTimeline from './pages/TheTimeline.vue'
+import TheActivity from './pages/TheActivity.vue'
+import TheProgress from './pages/TheProgress.vue'
+
+const currentPage = ref(normalizePageHash());
+
+function normalizePageHash() {
+  const hash = window.location.hash.slice(1);
+
+  if ([PAGE_ACTIVITY, PAGE_PROGRESS, PAGE_TIMELINE].includes(hash)) {
+    return hash;
+  }
+
+  window.location.hash = PAGE_TIMELINE;
+
+  return PAGE_TIMELINE;
+}
 </script>
 
 <template>
   <Header />
 
   <main class="flex flex-col flex-grow">
-   de
+    <TheTimeline v-show="currentPage === PAGE_TIMELINE" />
+    <TheActivity v-show="currentPage === PAGE_ACTIVITY" />
+    <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 
-  <Nav />
+  <Nav :current-page="currentPage" @navigate="currentPage = $event" />
 </template>
