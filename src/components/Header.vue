@@ -1,16 +1,27 @@
 <script setup>
+import {PAGE_PROGRESS, PAGE_TIMELINE} from '../constants';
 import {CheckCircleIcon} from '@heroicons/vue/24/solid';
+
+const emit = defineEmits(['goToTimeline', 'gotToProgress']);
 </script>
 
 <template>
   <header class="sticky top-0 z-20 flex items-center justify-between border-b bg-indigo-200 p-2">
-    <a href="#" class="flex items-center">
+    <a
+      @click="emit('goToTimeline')"
+      :href="`#${PAGE_TIMELINE}`"
+      class="flex items-center"
+    >
       <img src="../assets/img/logo.png" alt="Logo" class="h-10">
       <span class="text-indigo-700 text-lg ml-1">ActiveLife</span>
     </a>
-    <a href="#">
+
+    <a
+      @click="emit('goToProgress')"
+      :href="`#${PAGE_PROGRESS}`"
+    >
       <div 
-        v-if="true"
+        v-if="false"
         class="flex items-center gap-1"
       >
         <CheckCircleIcon class="h-6 text-green-600"/>
